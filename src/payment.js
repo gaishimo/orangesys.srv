@@ -8,10 +8,11 @@ module.exports = ({ body, secrets }, req, res) => {
     res.end('body is empty.');
     return;
   }
-  const { token, planId, uid } = body;
-  if (!token || !planId || !uid) {
+  const { token, planId, uid, email } = body;
+  console.log(body)
+  if (!token || !planId || !uid || !email) {
     res.writeHead(400);
-    res.end('params are missing (token, planId, or uid).');
+    res.end('params are missing (token, planId, uid, email).');
     return;
   }
   const { stripeSecretKey } = secrets;
@@ -23,6 +24,7 @@ module.exports = ({ body, secrets }, req, res) => {
   stripe.customers.create({
     source: token,
     plan: planId,
+    email,
     metadata: {
       uid,
     },
