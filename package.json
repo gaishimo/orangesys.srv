@@ -1,0 +1,32 @@
+{
+  "name": "orangesys.srv",
+  "version": "0.1.0",
+  "description": "orangesys.io server side",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "wt-bundle --output ./build/payment.js ./src/payment.js",
+    "watch": "wt-bundle --watch --output ./build/payment.js ./src/payment.js",
+    "lint": "eslint -c .eslintrc.yml *.js ./src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orangesys/orangesys.srv.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/orangesys/orangesys.srv/issues"
+  },
+  "homepage": "https://github.com/orangesys/orangesys.srv#readme",
+  "dependencies": {
+    "stripe": "^4.11.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.7.1",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-plugin-import": "^2.0.0",
+    "webtask-bundle": "^2.1.1",
+    "wt": "^1.1.1"
+  }
+}
