@@ -5,9 +5,6 @@ env:
   node: true
   browser: true
   mocha: true
-globals:
-  firebase: true
-settings:
-  import/resolver:
-    webpack:
-      config: "webpack.config.babel.js"
+rules:
+  semi: 0
+  import/prefer-default-export: 0

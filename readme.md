@@ -1,11 +1,16 @@
 
 Backend API for Stripe payment.
 
-### Deployment (Webtask)
+### Start server
 
 ```
-npm install -g wt
 npm install
 npm run build
-wt create ./build/payment.js --name $TASK_NAME --prod --secret stripeSecretKey=$STRIPE_SECRET_KEY
+PORT=5001 STRIPE_SECRET_KEY=xxxxxxxxxxx npm start
+```
+
+### Test
+
+```
+npm test
 ```

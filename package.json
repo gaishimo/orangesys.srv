@@ -4,10 +4,11 @@
   "description": "orangesys.io server side",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "wt-bundle --output ./build/payment.js ./src/payment.js",
-    "watch": "wt-bundle --watch --output ./build/payment.js ./src/payment.js",
-    "lint": "eslint -c .eslintrc.yml *.js ./src"
+    "build": "gulp build",
+    "clean": "rm -fr ./target",
+    "start": "node target/server.js",
+    "lint": "eslint -c .eslintrc.yml *.js ./src",
+    "test": "mocha test/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -20,13 +21,41 @@
   },
   "homepage": "https://github.com/orangesys/orangesys.srv#readme",
   "dependencies": {
+    "babel-runtime": "^6.11.6",
+    "body-parser": "^1.15.2",
+    "cors": "^2.8.1",
+    "express": "^4.14.0",
+    "lodash": "^4.16.4",
+    "moment": "^2.15.1",
+    "power-assert": "^1.4.1",
     "stripe": "^4.11.0"
   },
   "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-cli": "^6.14.0",
+    "babel-core": "^6.17.0",
+    "babel-eslint": "^6.1.2",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-espower": "^2.3.1",
+    "babel-plugin-syntax-async-functions": "^6.8.0",
+    "babel-plugin-transform-regenerator": "^6.9.0",
+    "babel-plugin-transform-runtime": "^6.9.0",
+    "babel-polyfill": "^6.13.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-power-assert": "^1.0.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-register": "^6.9.0",
+    "del": "^2.2.2",
     "eslint": "^3.7.1",
     "eslint-config-airbnb": "^12.0.0",
     "eslint-plugin-import": "^2.0.0",
-    "webtask-bundle": "^2.1.1",
-    "wt": "^1.1.1"
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-load-plugins": "^1.3.0",
+    "intelli-espower-loader": "^1.0.1",
+    "minifier": "^0.8.0",
+    "mocha": "^3.1.2",
+    "run-sequence": "^1.2.2"
   }
 }
