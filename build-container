@@ -1,0 +1,7 @@
+#!/bin/bash
+sh build
+source _VERSION
+_tag=${_VERSION}
+
+docker build -t orangesys/orangesys-srv:${_tag} .
+docker push orangesys/orangesys-srv:${_tag}
