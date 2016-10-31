@@ -18,7 +18,7 @@ dependencies:
 
 test:
   override:
-    - ./build:
+    - ./build-node:
         parallel: true
     - ./build.sh
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
