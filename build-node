@@ -1,3 +1,0 @@
-#!/bin/sh
-set -e 
-docker run --rm -v "$(pwd)":/app -w /app mhart/alpine-node:6.9.1 sh -c "npm install;npm run build;npm test"

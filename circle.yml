@@ -1,6 +1,4 @@
 machine:
-  node:
-    version: 6.9.1
   pre:
     - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
 
@@ -15,14 +13,10 @@ machine:
 
 dependencies:
   pre:
-    - docker pull mhart/alpine-node:base-6
+    - docker pull mhart/alpine-node:6.9.1
 
 test:
   override:
-    - npm install
-    - npm run build
-    - npm test
-        parallel: true
     - ./build.sh
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
     - echo $GCLOUD_SERVICE_KEY | base64 --decode -i > ${HOME}/account-auth.json
