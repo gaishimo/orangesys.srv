@@ -14,6 +14,7 @@ dev:
 build:
   steps:
     - npm-install
+    - npm-test
     - script:
         name: setup node env
         code: |
