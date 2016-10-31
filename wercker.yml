@@ -1,5 +1,6 @@
 box: 
-  id: node:6.9.1-slim
+  id: mhart/alpine-node:6.9.1
+  cmd: /bin/sh
   ports:
     - "5001"
 dev:
