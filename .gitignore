@@ -21,3 +21,8 @@ target/
 __MACOSX/
 .DS_Store
 Thumbs.db
+
+#---------------------------------
+# CI wercker
+#---------------------------------
+.wercker
