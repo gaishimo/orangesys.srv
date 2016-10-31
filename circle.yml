@@ -8,17 +8,22 @@ machine:
     CLUSTER_NAME: orangesysio
     DEBIAN_FRONTEND: noninteractive
 
+  node:
+    version: 6.9.1
+
   services:
     - docker
+    - node -v
 
 dependencies:
   pre:
-    - docker pull mhart/alpine-node:6.9.1
     - docker pull mhart/alpine-node:base-6
 
 test:
   override:
-    - ./build-node:
+    - npm install
+    - npm run build
+    - npm test
         parallel: true
     - ./build.sh
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
