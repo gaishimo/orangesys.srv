@@ -1,6 +1,5 @@
 #!/bin/bash
 
-npm install -g npm
-npm install
+npm install 
 npm test
 npm run build
