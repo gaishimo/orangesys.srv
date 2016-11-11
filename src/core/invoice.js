@@ -22,13 +22,13 @@ export class Invoice {
     if (this.isFirstSubscription()) {
       return this.addInvoiceItemForProRatedChargeDiscount()
     }
-    return Promise.resolve()
+    return Promise.resolve({})
   }
   stripeInvoiceItems() {
     return this.stripe.invoiceItems
   }
   addInvoiceItemForProRatedChargeDiscount() {
-    const { plan } = this.data
+    const { plan } = this.data.lines.data[0]
     const monthlyPrice = plan.amount
     const customerId = this.data.customer
     const invoiceId = this.data.id
@@ -40,13 +40,13 @@ export class Invoice {
       currency: 'jpy',
       description: '初月日割分除外',
     }
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => (
       this.stripeInvoiceItems().create(invoiceData, (err, invoiceItem) => {
-        console.log('An invoice item has been added. invoice: %j', invoiceData)
         if (err) { reject(err); return }
+        console.log('An invoice item has been added. invoice: %j', invoiceData)
         resolve(invoiceItem)
       })
-    })
+    ))
   }
   isFirstSubscription() {
     const { date, period_start } = this.data

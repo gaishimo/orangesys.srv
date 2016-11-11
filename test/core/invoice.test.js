@@ -30,11 +30,15 @@ describe('calculatDiscountOfProRatedCharge', () => {
 describe('Invoice#addInvoiceItemForProRatedChargeDiscount', () => {
   it('add an invoice item if it is first payment', (done) => {
     const eventData = {
-      plan: { id: 'planid1', amount: 50000 },
       customer: 'customerId1',
       id: 'invoiceId1',
       date: moment('2016-11-01T11:00:00+0900').format('X'),
       period_start: moment('2016-10-11+0900').format('X'),
+      lines: {
+        data: [{
+          plan: { id: 'planid1', amount: 50000 },
+        }],
+      },
     }
     const invoice = new Invoice(DUMMY_TOKEN, eventData)
     const stripeDummy = {

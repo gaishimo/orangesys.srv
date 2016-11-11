@@ -1,4 +1,4 @@
-import Invoice from '../core/invoice'
+import { Invoice } from '../core/invoice'
 
 export const invoiceCreated = (req, res) => {
   const { body: { data } } = req
@@ -6,6 +6,12 @@ export const invoiceCreated = (req, res) => {
   invoice.created()
     .then((result) => {
       res.end(JSON.stringify(result))
+    })
+    .catch((err) => {
+      res.writeHead(500)
+      console.error(err)
+      res.end(err.toString())
+      return
     })
 }
 
@@ -15,7 +21,7 @@ const mappings = {
 
 export const handle = (req, res) => {
   const { body } = req
-  console.log('webhook: ', body)
+  console.log('webhook: %j', body)
   if (!body) {
     res.writeHead(400)
     res.end('body is empty.')
