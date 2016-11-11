@@ -28,7 +28,8 @@
     "lodash": "^4.16.4",
     "moment": "^2.15.1",
     "power-assert": "^1.4.1",
-    "stripe": "^4.11.0"
+    "stripe": "^4.11.0",
+    "sinon": "^1.17.6"
   },
   "devDependencies": {
     "babel": "^6.5.2",
