@@ -5,7 +5,7 @@ import sinon from 'sinon'
 import {
   calculateDiscountOfProRatedCharge,
   Invoice,
-} from '../../src/core/invoice'
+} from '../../../src/core/invoice'
 
 const DUMMY_TOKEN = 'asdfasfdasdfasdf'
 

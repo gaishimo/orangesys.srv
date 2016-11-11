@@ -3,7 +3,7 @@ import moment from 'moment'
 
 import {
   trialEndTimestamp,
-} from '../../src/core/customer'
+} from '../../../src/core/customer'
 
 describe('trialEndTimestamp', () => {
   it('works', () => {

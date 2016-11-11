@@ -8,7 +8,7 @@
     "clean": "rm -fr ./target",
     "start": "node target/server.js",
     "lint": "eslint -c .eslintrc.yml *.js ./src",
-    "test": "mocha test/**/*.js"
+    "test": "mocha test/unit/**/*.js"
   },
   "repository": {
     "type": "git",
