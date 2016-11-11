@@ -5,16 +5,7 @@ import plans from '../plans'
 
 const getCurrentTime = () => moment().utcOffset('+09:00')
 
-export const calculatDiscountOfProRatedCharge = (monthlyPrice, currentTime = getCurrentTime()) => {
-  const currentDate = currentTime.date()
-  const endOfMonth = currentTime.endOf('month').date()
-  const serviceUsingDays = (endOfMonth - currentDate) + 1
-  const actualAmount = round((monthlyPrice / 30) * serviceUsingDays)
-  if (actualAmount > monthlyPrice) {
-    return 0
-  }
-  return monthlyPrice - actualAmount
-}
+
 
 export const trialEndTimestamp = (currentTime = getCurrentTime()) => (
   currentTime.utcOffset('+09:00')
@@ -46,20 +37,6 @@ export default class Customer {
     })
   }
 
-  addInvoiceItemsForFirstSubsription(customer, planId) {
-    return new Promise((resolve, reject) => {
-      const monthlyPrice = plans[planId].price
-      this.stripe.invoiceItems.create({
-        customer: customer.id,
-        amount: -calculatDiscountOfProRatedCharge(monthlyPrice),
-        currency: 'jpy',
-        description: '初月日割分除外',
-      }, (err, invoiceItem) => {
-        if (err) { reject(err); return }
-        resolve(invoiceItem)
-      })
-    })
-  }
 
   subscribe(customer, planId) {
     return new Promise((resolve, reject) => {
