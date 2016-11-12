@@ -17,7 +17,6 @@ console.log('STRIPE_TEST_PLAN_ID:', STRIPE_TEST_PLAN_ID)
 const stripeApi = stripe(process.env.STRIPE_TEST_SECRET_KEY)
 
 describe('webhook: invoice.created', () => {
-  const planId = 'test-plan1'
   let customer = null
   let subscription = null
   let invoice = null
@@ -36,7 +35,7 @@ describe('webhook: invoice.created', () => {
       new Promise((resolve, reject) => {
         stripeApi.subscriptions.create({
           customer: customer.id,
-          plan: planId,
+          plan: STRIPE_TEST_PLAN_ID,
           trial_end: trialEndTimestamp(),
         }, (err, result) => {
           if (err) { reject(err); return }
