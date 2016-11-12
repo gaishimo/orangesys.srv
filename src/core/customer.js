@@ -3,9 +3,8 @@ import moment from 'moment'
 import { round } from 'lodash/math'
 import plans from '../plans'
 
+const TAX_PERCENT = 8
 const getCurrentTime = () => moment().utcOffset('+09:00')
-
-
 
 export const trialEndTimestamp = (currentTime = getCurrentTime()) => (
   currentTime.utcOffset('+09:00')
@@ -43,6 +42,7 @@ export default class Customer {
       this.stripe.subscriptions.create({
         customer: customer.id,
         plan: planId,
+        tax_percent: TAX_PERCENT,
         trial_end: trialEndTimestamp(),
       }, (err, subscription) => {
         if (err) { reject(err); return }

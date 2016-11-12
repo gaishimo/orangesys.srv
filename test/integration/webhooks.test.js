@@ -36,6 +36,7 @@ describe('webhook: invoice.created', () => {
         stripeApi.subscriptions.create({
           customer: customer.id,
           plan: STRIPE_TEST_PLAN_ID,
+          tax_percent: 8,
           trial_end: trialEndTimestamp(),
         }, (err, result) => {
           if (err) { reject(err); return }
