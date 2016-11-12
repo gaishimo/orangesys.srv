@@ -27,7 +27,7 @@ dependencies:
 
 test:
   override:
-    - docker run -d -p 5001:5001 orangesys/orangesys-srv
+    - docker run -d -p 5001:5001 -e STRIPE_SECRET_KEY=$STRIPE_TEST_SECRET_KEY orangesys/orangesys-srv
     - npm run integration-test
     - docker stop $(docker ps -a -q)
     - docker rm $(docker ps -a -q) || /bin/true
