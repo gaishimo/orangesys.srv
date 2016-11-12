@@ -29,32 +29,38 @@ describe('calculatDiscountOfProRatedCharge', () => {
 
 describe('Invoice#addInvoiceItemForProRatedChargeDiscount', () => {
   it('add an invoice item if it is first payment', (done) => {
+    const subscriptionStartedAt = moment('2016-10-11+0900').format('X')
     const eventData = {
       customer: 'customerId1',
       id: 'invoiceId1',
       date: moment('2016-11-01T11:00:00+0900').format('X'),
-      period_start: moment('2016-10-11+0900').format('X'),
       lines: {
         data: [{
           plan: { id: 'planid1', amount: 50000 },
         }],
       },
+      subscription: 'subscriptionId',
     }
     const invoice = new Invoice(DUMMY_TOKEN, eventData)
-    const stripeDummy = {
-      create: (data, callback) => { callback(null) },
-    }
-    sinon.stub(invoice, 'stripeInvoiceItems').returns(stripeDummy)
-    const spy = sinon.spy(stripeDummy, 'create')
-    invoice.addInvoiceItemForProRatedChargeDiscount()
-    assert.deepEqual(spy.getCall(0).args[0], {
+    sinon.stub(invoice, 'retrieveSubscription').returns(Promise.resolve({
+      created: subscriptionStartedAt,
+    }))
+    invoice.addInvoice = () => (Promise.resolve({}))
+    const mock = sinon.mock(invoice)
+    const expectedArgs = {
       customer: eventData.customer,
       invoice: eventData.id,
       amount: -15000,
       currency: 'jpy',
       description: '初月日割分除外',
-    })
-    done()
+    }
+    mock.expects('addInvoice').withArgs(expectedArgs).once()
+    invoice.addInvoiceItemForProRatedChargeDiscount()
+      .then(() => {
+        assert(mock.verify())
+        done()
+      })
+      .catch(err => done(err))
   })
 })
 
