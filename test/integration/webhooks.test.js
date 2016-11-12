@@ -5,10 +5,15 @@ import { merge } from 'lodash/object'
 import { trialEndTimestamp } from '../../src/core/customer'
 import testData from './event_data/invoice.created'
 
-const TEST_CUSTOMER_ID = process.env.STRIPE_TEST_CUSTOMER_ID || 'cus_9XvY3G2GRXjJ4c'
-const TEST_WEBHOOK_URL = process.env.STRIPE_TEST_WEBHOOK_URL
+const STRIPE_TEST_CUSTOMER_ID = process.env.STRIPE_TEST_CUSTOMER_ID || 'cus_9XvY3G2GRXjJ4c'
+const STRIPE_TEST_WEBHOOK_URL = process.env.STRIPE_TEST_WEBHOOK_URL
   || 'http://127.0.0.1:5001/webhooks'
-const TEST_PLAN_ID = process.env.STRIPE_TEST_CUSTOMER_ID || 'test-plan1'
+const STRIPE_TEST_PLAN_ID = process.env.STRIPE_TEST_PLAN_ID || 'test-plan1'
+
+console.log('STRIPE_TEST_CUSTOMER_ID:', STRIPE_TEST_CUSTOMER_ID)
+console.log('STRIPE_TEST_WEBHOOK_URL:', STRIPE_TEST_WEBHOOK_URL)
+console.log('STRIPE_TEST_PLAN_ID:', STRIPE_TEST_PLAN_ID)
+
 const stripeApi = stripe(process.env.STRIPE_TEST_SECRET_KEY)
 
 describe('webhook: invoice.created', () => {
@@ -20,7 +25,7 @@ describe('webhook: invoice.created', () => {
   before((done) => {
     const retriveCustomer = () => (
       new Promise((resolve, reject) => {
-        stripeApi.customers.retrieve(TEST_CUSTOMER_ID, (e, existingCustomer) => {
+        stripeApi.customers.retrieve(STRIPE_TEST_CUSTOMER_ID, (e, existingCustomer) => {
           if (e) { reject(e); return }
           customer = existingCustomer;
           resolve(customer);
@@ -90,8 +95,8 @@ describe('webhook: invoice.created', () => {
       },
     })
     eventData.data.object.lines.data[0].id = invoiceItem.id
-    eventData.data.object.lines.data[0].plan.id = TEST_PLAN_ID
-    axios.post(TEST_WEBHOOK_URL, eventData)
+    eventData.data.object.lines.data[0].plan.id = STRIPE_TEST_PLAN_ID
+    axios.post(STRIPE_TEST_WEBHOOK_URL, eventData)
       .then((res) => {
         assert(res.status === 200)
         done()
