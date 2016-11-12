@@ -9,7 +9,7 @@ const getCurrentTime = () => moment().utcOffset('+09:00')
 
 export const trialEndTimestamp = (currentTime = getCurrentTime()) => (
   currentTime.utcOffset('+09:00')
-    .add('month', 1)
+    .add(1, 'month')
     .set('date', 1)
     .set('hour', 11)
     .set('minute', 0)

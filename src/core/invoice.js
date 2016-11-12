@@ -24,29 +24,39 @@ export class Invoice {
     }
     return Promise.resolve({})
   }
-  stripeInvoiceItems() {
-    return this.stripe.invoiceItems
-  }
-  addInvoiceItemForProRatedChargeDiscount() {
-    const { plan } = this.data.lines.data[0]
-    const monthlyPrice = plan.amount
-    const customerId = this.data.customer
-    const invoiceId = this.data.id
-    const subsriptionStartedAt = moment(this.data.period_start, 'X')
-    const invoiceData = {
-      customer: customerId,
-      invoice: invoiceId,
-      amount: -calculateDiscountOfProRatedCharge(monthlyPrice, subsriptionStartedAt),
-      currency: 'jpy',
-      description: '初月日割分除外',
-    }
-    return new Promise((resolve, reject) => (
-      this.stripeInvoiceItems().create(invoiceData, (err, invoiceItem) => {
+  retrieveSubscription() {
+    return new Promise((resolve, reject) => {
+      this.stripe.subscriptions.retrieve(this.data.subscription, (err, subscription) => {
         if (err) { reject(err); return }
-        console.log('An invoice item has been added. invoice: %j', invoiceData)
+        resolve(subscription)
+      })
+    })
+  }
+  addInvoice(data) {
+    return new Promise((resolve, reject) => (
+      this.stripe.invoiceItems.create(data, (err, invoiceItem) => {
+        if (err) { reject(err); return; }
+        console.log('An invoice item has been added. invoice: %j', invoiceItem)
         resolve(invoiceItem)
       })
     ))
+  }
+  addInvoiceItemForProRatedChargeDiscount() {
+    const { amount } = this.data.lines.data[0]
+    const customerId = this.data.customer
+    const invoiceId = this.data.id
+    return this.retrieveSubscription()
+      .then((subscription) => {
+        const subsriptionStartedAt = moment(subscription.created, 'X')
+        const invoiceData = {
+          customer: customerId,
+          invoice: invoiceId,
+          amount: -calculateDiscountOfProRatedCharge(amount, subsriptionStartedAt),
+          currency: 'jpy',
+          description: '初月日割分除外',
+        }
+        return this.addInvoice(invoiceData)
+      })
   }
   isFirstSubscription() {
     const { date, period_start } = this.data
