@@ -36,7 +36,8 @@ describe('Invoice#addInvoiceItemForProRatedChargeDiscount', () => {
       date: moment('2016-11-01T11:00:00+0900').format('X'),
       lines: {
         data: [{
-          plan: { id: 'planid1', amount: 50000 },
+          amount: 50000,
+          plan: { id: 'planid1' },
         }],
       },
       subscription: 'subscriptionId',
