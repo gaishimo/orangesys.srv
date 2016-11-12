@@ -1,10 +1,10 @@
 machine:
   node:
     version: 6.9.1
-
   pre:
     - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
-
+  timezone:
+    Asia/Tokyo
   environment:
     PROJECT_NAME: orangesys
     CLOUDSDK_COMPUTE_ZONE: asia-east1-c
@@ -14,10 +14,23 @@ machine:
   services:
     - docker
 
-test:
-  override:
+dependencies:
+  cache_directories:
+    - "~/docker"
+  pre:
+    - git tag
+    - docker info
+  post:
     - ./build-node
     - ./build.sh
+    - docker images
+
+test:
+  override:
+    - docker run -d -p 5001:5001 orangesys/orangesys-srv
+    - npm run integration-test
+    - docker stop $(docker ps -a -q)
+    - docker rm $(docker ps -a -q) || /bin/true
 
 general:
   branches:
