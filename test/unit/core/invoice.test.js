@@ -53,7 +53,7 @@ describe('Invoice#addInvoiceItemForProRatedChargeDiscount', () => {
       invoice: eventData.id,
       amount: -15000,
       currency: 'jpy',
-      description: '初月日割分除外',
+      description: '初月日割分控除',
     }
     mock.expects('addInvoice').withArgs(expectedArgs).once()
     invoice.addInvoiceItemForProRatedChargeDiscount()

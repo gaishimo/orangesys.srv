@@ -53,7 +53,7 @@ export class Invoice {
           invoice: invoiceId,
           amount: -calculateDiscountOfProRatedCharge(amount, subsriptionStartedAt),
           currency: 'jpy',
-          description: '初月日割分除外',
+          description: '初月日割分控除',
         }
         return this.addInvoice(invoiceData)
       })
