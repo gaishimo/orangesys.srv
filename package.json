@@ -8,7 +8,8 @@
     "clean": "rm -fr ./target",
     "start": "node target/server.js",
     "lint": "eslint -c .eslintrc.yml *.js ./src",
-    "test": "mocha test/unit/**/*.js"
+    "test": "mocha test/unit/**/*.js",
+    "integration-test": "mocha test/integration/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   },
   "homepage": "https://github.com/orangesys/orangesys.srv#readme",
   "dependencies": {
+    "axios": "^0.15.2",
     "babel-runtime": "^6.11.6",
     "body-parser": "^1.15.2",
     "cors": "^2.8.1",
@@ -28,8 +30,8 @@
     "lodash": "^4.16.4",
     "moment": "^2.15.1",
     "power-assert": "^1.4.1",
-    "stripe": "~4.12.0",
-    "sinon": "^1.17.6"
+    "sinon": "^1.17.6",
+    "stripe": "~4.12.0"
   },
   "devDependencies": {
     "babel": "^6.5.2",
