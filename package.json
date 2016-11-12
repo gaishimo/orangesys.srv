@@ -9,7 +9,7 @@
     "start": "node target/server.js",
     "lint": "eslint -c .eslintrc.yml *.js ./src",
     "test": "mocha test/unit/**/*.js",
-    "integration-test": "mocha test/integration/**/*.js"
+    "integration-test": "mocha test/integration/"
   },
   "repository": {
     "type": "git",
